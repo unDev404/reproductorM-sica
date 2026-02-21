@@ -149,28 +149,28 @@ int main() {
 
 
 
-    insertarcancion(lista1, "Rubia Sol Morena Luna", "Caramelos de Cianuro", 3); //120
-    insertarcancion(lista1, "Sanitarios", "Caramelos de Cianuro", 3);            //120   
-    insertarcancion(lista1, "La Casa", "Caramelos de Cianuro", 3);               //120
-    insertarcancion(lista1, "Veronica", "Caramelos de Cianuro", 3);              //120
-    insertarcancion(lista1, "Secreto", "Caramelos de Cianuro", 3);               //120
-    insertarcancion(lista1, "El Instante Paso", "Caramelos de Cianuro", 3);      //120
+    insertarcancion(lista1, "Rubia Sol Morena Luna", "Caramelos de Cianuro", 30); 
+    insertarcancion(lista1, "Sanitarios", "Caramelos de Cianuro", 35);               
+    insertarcancion(lista1, "La Casa", "Caramelos de Cianuro", 120);               
+    insertarcancion(lista1, "Veronica", "Caramelos de Cianuro", 50);              
+    insertarcancion(lista1, "Secreto", "Caramelos de Cianuro", 120);               
+    insertarcancion(lista1, "El Instante Paso", "Caramelos de Cianuro", 32);      
 
     // Agregar canciones a la lista 2
-    insertarcancion(lista2, "La dueña del Swing", "Los hermanos Rosario", 3);
-    insertarcancion(lista2, "Te Compro Tu Novia", "Ramon Orlando", 3);
-    insertarcancion(lista2, "Tu eres Ajena", "Eddy Herrera", 10);
-    insertarcancion(lista2, "Tiburon", "Sandy y Papo", 3);
-    insertarcancion(lista2, "Una Fotografia", "Bonny Cepeda", 3);
-    insertarcancion(lista2, "Tu Sonrisa", "Elvis Crespo", 3);
+    insertarcancion(lista2, "La dueña del Swing", "Los hermanos Rosario", 100);
+    insertarcancion(lista2, "Te Compro Tu Novia", "Ramon Orlando", 30);
+    insertarcancion(lista2, "Tu eres Ajena", "Eddy Herrera", 120);
+    insertarcancion(lista2, "Tiburon", "Sandy y Papo", 38);
+    insertarcancion(lista2, "Una Fotografia", "Bonny Cepeda", 30);
+    insertarcancion(lista2, "Tu Sonrisa", "Elvis Crespo", 120);
 
     // Agregar canciones a la lista 3
-    insertarcancion(lista3, "Annihilate", "Metro Bomin", 8);
-    insertarcancion(lista3, "Hora Loca", "Rawayana", 3);
-    insertarcancion(lista3, "Imitadora", "Romeo Santos", 3);
-    insertarcancion(lista3, "Dile", "Don Omar", 5);
-    insertarcancion(lista3, "Gasolina", "Daddy Yankee", 3);
-    insertarcancion(lista3, "Love Me Again", "John Newman", 3);
+    insertarcancion(lista3, "Annihilate", "Metro Bomin", 80);
+    insertarcancion(lista3, "Hora Loca", "Rawayana", 30);
+    insertarcancion(lista3, "Imitadora", "Romeo Santos", 110);
+    insertarcancion(lista3, "Dile", "Don Omar", 54);
+    insertarcancion(lista3, "Gasolina", "Daddy Yankee", 30);
+    insertarcancion(lista3, "Love Me Again", "John Newman", 45);
 // Opciones del menu 
 int opcionlista, opcionreproduccion;
 char repetirlista, VolverMenuinicial;
@@ -249,4 +249,5 @@ do {
 
 cout<<"Gracias por usar el reproductor de musica."<<endl;
 return 0;
+
 }
