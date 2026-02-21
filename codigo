@@ -1,0 +1,103 @@
+#include<iostream>
+#include<time.h>
+#include<string>
+#include<random>
+
+using namespace std;
+
+// Definicion de las estructuras de datos de cada lista
+struct nodo {
+    string titulo;
+    string artista;
+    string duracion;
+    nodo* siguiente;
+};
+// Funcion para insertar canciones al final de la lista
+void insertarcancion(nodo* &cabeza, string titulo, string artista, string duracion){
+    nodo* nuevoNodo = new nodo();
+    nuevoNodo->titulo = titulo;
+    nuevoNodo->artista = artista;
+    nuevoNodo->duracion = duracion;
+   
+    if (cabeza==nullptr) {
+        cabeza==nuevoNodo;
+        nuevoNodo->siguiente=cabeza;
+
+    }else{
+        nodo* actual = cabeza;
+        while (actual->siguiente!=cabeza) {
+            actual=actual->siguiente;
+        }
+        actual->siguiente=nuevoNodo;
+        nuevoNodo->siguiente=cabeza;
+    }
+}
+// Funcion para pausar
+void pausaparasegundo(){
+    clock_t pausa= clock() + CLOCKS_PER_SEC;
+    while (clock() < pausa) {
+}
+}
+// Funcion para reproducir la cancion
+void reproducir(nodo* &cancion){
+    int tamanobarra=30;
+
+    cout<<"Reproduciendo: "<<cancion->titulo<<" - " <<cancion->artista<<endl;
+    // reproduccion regresiva
+    for(int t= cancion->duracion; t>=0; --t){
+    int cancioncompleta = ((cancion->duracion - t) * tamanobarra)/ cancion->duracion;
+        string barrallena(cancioncompleta, '-');
+        string barraVacia(tamanobarra-cancioncompleta, ' ');
+        cout<<"\rTiempo restante de la cancion:"<< t <<"s ["<<barrallena<<">"<<barraVacia<<"]"<<flush;
+if (t>0) {
+    pausaparasegundo();
+}
+    }
+    cout<<endl<<"Cancion finalizada."<<endl;
+}
+//Funcion para mostrar las canciones de la lista que se seleccione
+void mostrarcanciones(nodo* &cabeza) {
+    if (cabeza == nullptr) {
+        cout << "No hay canciones en la lista" << endl;
+        return;
+    }
+    nodo* actual = cabeza;
+    int numero= 1;
+    // usamos Do while para dar una vuelta en la lista circular
+    do {
+        cout << "Titulo: " <<numero<<"- "<< actual->titulo << " - " << actual->artista << "(" << actual->duracion << "s)" << endl;
+        actual = actual->siguiente;
+    } while (actual != cabeza);
+}
+// Funciones de reproduccion principales
+// Reproduccion secuencial
+void reproduccionsecuencial(nodo* &cabeza) {
+    if (cabeza==nullptr) return;
+    nodo* actual = cabeza;
+    cout<<"Reproduccion secuencial iniciada"<<endl;
+    do {
+        reproducir(actual);
+        actual = actual->siguiente;
+    } while (actual != cabeza);
+}
+// Repeticion de Cancion
+void repeticioncancion(nodo* &cabeza) {
+    if (cabeza==nullptr) return;
+    nodo* actual = cabeza;
+    cout<<"Repetir lista"<<endl;
+    reproducir(actual);
+    int cancionesreproducidas=0;
+    // Voy a colocar 12 para que reproduzca la lista de 6 canciones 2 veces
+    while (cancionesreproducidas < 12 {
+        reproducir(actual);
+        cancionesreproducidas++;
+    }
+}
+// funcion para repetir cancion
+void repetircancion(nodo* &cabeza) {
+    if(cabeza==nullptr) return;
+    cout<<"Repetir cancion"<<endl;
+    for (int i=0; i<2; ++i)
+    reproducir(cabeza);
+}
+// Falta la funcion de aleatorio, pero es la que menos entiendo, pipipipi.
