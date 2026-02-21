@@ -1,2 +1,3 @@
 # reproductorMusica
-actividad para el sábado
+Auí sufrimos los que no usamos IA
+RIP Alfredo y yo
