@@ -1,8 +1,8 @@
 #include<iostream>
 #include<time.h>
 #include<string>
-#include<random>
-
+#include <algorithm> 
+#include <random>    
 using namespace std;
 
 // Definicion de las estructuras de datos de cada lista
@@ -61,9 +61,10 @@ void mostrarcanciones(nodo* &cabeza) {
     }
     nodo* actual = cabeza;
     int numero= 1;
+     cout<< "\n\tCANCIONES EN LA LISTA\n"<< endl;
     // usamos Do while para dar una vuelta en la lista circular
     do {
-        cout << "Titulo: " <<numero<<"- "<< actual->titulo << " - " << actual->artista << "(" << actual->duracion << "s)" << endl;
+        cout <<numero++<<". "<< actual->titulo << " - " << actual->artista << " [" << actual->duracion << "s]" << endl;
         actual = actual->siguiente;
     } while (actual != cabeza);
 }
@@ -116,18 +117,25 @@ void repetircancion(nodo* &cabeza) {
 }
 // funcion de aleatorio
 void aleatorio(nodo *cabeza) {
-    if (cabeza == nullptr) return;
-   for (int i = 0; i < 10; ++i) {
-        int randomIndex = rand() % 6; // Genera un índice aleatorio entre 0 y 5
+     if (cabeza == nullptr) return;
+     //para reordenar de forma aleatoria los numeros de la matriz
+    int numeros[6] ={1,2,3,4,5,6};
+    random_device rd;
+    mt19937 g(rd());
+    shuffle(numeros, numeros + 6, g);
+
+   
+   for (int i = 0; i < 6; ++i) {
+        //cada numero de la matriz indica la canción
         nodo* actual = cabeza;
-        for (int j = 0; j < randomIndex; ++j) {
+        for (int j = 0; j < numeros[i] ; ++j) {
             actual = actual->siguiente;
         }
         reproducir(actual);
     }
 }
 int main() {
-    srand(time(0)); // Inicializa la semilla para números aleatorios
+    //srand(time(0)); // Inicializa la semilla para números aleatorios
     nodo* lista1 = nullptr;
     nodo* lista2 = nullptr;
     nodo* lista3 = nullptr;
@@ -144,20 +152,20 @@ int main() {
     insertarcancion(lista1, "El Instante Paso", "Caramelos de Cianuro", 3);      //120
 
     // Agregar canciones a la lista 2
-    insertarcancion(lista2, "La dueña del Swing", "Los hermanos Rosario", 100);
-    insertarcancion(lista2, "Te Compro Tu Novia", "Ramon Orlando", 120);
-    insertarcancion(lista2, "Tu eres Ajena", "Eddy Herrera", 120);
-    insertarcancion(lista2, "Tiburon", "Sandy y Papo", 233);
-    insertarcancion(lista2, "Una Fotografia", "Bonny Cepeda", 100);
-    insertarcancion(lista2, "Tu Sonrisa", "Elvis Crespo", 120);
+    insertarcancion(lista2, "La dueña del Swing", "Los hermanos Rosario", 3);
+    insertarcancion(lista2, "Te Compro Tu Novia", "Ramon Orlando", 3);
+    insertarcancion(lista2, "Tu eres Ajena", "Eddy Herrera", 10);
+    insertarcancion(lista2, "Tiburon", "Sandy y Papo", 3);
+    insertarcancion(lista2, "Una Fotografia", "Bonny Cepeda", 3);
+    insertarcancion(lista2, "Tu Sonrisa", "Elvis Crespo", 3);
 
     // Agregar canciones a la lista 3
-    insertarcancion(lista3, "Annihilate", "Metro Bomin", 120);
-    insertarcancion(lista3, "Hora Loca", "Rawayana", 100);
-    insertarcancion(lista3, "Imitadora", "Romeo Santos", 120);
-    insertarcancion(lista3, "Dile", "Don Omar", 100);
-    insertarcancion(lista3, "Gasolina", "Daddy Yankee", 100);
-    insertarcancion(lista3, "Love Me Again", "John Newman", 120);
+    insertarcancion(lista3, "Annihilate", "Metro Bomin", 8);
+    insertarcancion(lista3, "Hora Loca", "Rawayana", 3);
+    insertarcancion(lista3, "Imitadora", "Romeo Santos", 3);
+    insertarcancion(lista3, "Dile", "Don Omar", 5);
+    insertarcancion(lista3, "Gasolina", "Daddy Yankee", 3);
+    insertarcancion(lista3, "Love Me Again", "John Newman", 3);
 // Opciones del menu 
 int opcionlista, opcionreproduccion;
 char repetirlista, VolverMenuinicial;
@@ -165,7 +173,7 @@ nodo* listaSeleccionada = nullptr;
 string nombreLista="";
 // Menu Inicial de las listas
 do {
-    cout<<"Seleccione una lista de reproduccion:"<<endl;
+    cout<<"\n\tSELECCIONE UNA LISTA DE MUSICA:\n"<<endl;
     cout<<"1. Lista 1: Caramelos de Cianuro"<<endl;
     cout<<"2. Lista 2: Merengue"<<endl;
     cout<<"3. Lista 3: Variado"<<endl;
@@ -193,12 +201,13 @@ do {
     }
     // Menu de opciones de reproduccion
     
-        cout<<"Seleccione una opcion de reproduccion para la lista "<<nombreLista<<":"<<endl;
+        cout<<"\n\tSELECCIONE UN MODO DE REPRODUCCION\n"<<nombreLista<<":"<<endl;
         cout<<"1. Reproduccion Secuencial"<<endl;
         cout<<"2. Repetir Lista"<<endl;
         cout<<"3. Repetir Cancion"<<endl;
         cout<<"4. Reproduccion Aleatoria"<<endl;
-        cout<<"5. Cambiar de Lista"<<endl; 
+        cout<<"5. Mostrar las canciones de la Lista"<<endl;
+        cout<<"6. Volver al menú anterior"<<endl;
         cout<<"Ingrese el numero de la opcion de reproduccion: ";
         cin>>opcionreproduccion;
 
@@ -215,7 +224,11 @@ do {
             case 4:
                 aleatorio(listaSeleccionada);
                 break;
-            case 5: continue; 
+            case 5: 
+                mostrarcanciones(listaSeleccionada);
+                break;
+            case 6:
+            continue;
             default:
                 cout<<"Opcion invalida, por favor seleccione una opcion valida."<<endl;
                 continue; 
