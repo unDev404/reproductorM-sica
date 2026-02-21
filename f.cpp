@@ -2,8 +2,7 @@
 #include <string>
 #include <thread>
 #include <chrono>
-#include <cstdlib> // Para rand() y srand()
-#include <ctime>   // Para time()
+#include <random>
 
 using namespace std;
 
@@ -15,15 +14,14 @@ struct Nodo {
     Nodo* siguiente;
 };
 
-// Clase para gestionar la Lista Circular
-class ListaCircular {
-private:
+struct ListaCircular {
+    // Variables de la lista
     Nodo* cabeza;
     Nodo* cola;
     string nombreLista;
     int idLista;
 
-public:
+    // Constructor
     ListaCircular(int id, string nombre) {
         cabeza = nullptr;
         cola = nullptr;
@@ -36,25 +34,24 @@ public:
         if (!cabeza) {
             cabeza = nuevo;
             cola = nuevo;
-            nuevo->siguiente = cabeza; // Apunta a sí mismo
+            nuevo->siguiente = cabeza; 
         } else {
             cola->siguiente = nuevo;
             cola = nuevo;
-            cola->siguiente = cabeza; // Cierra el círculo
+            cola->siguiente = cabeza; 
         }
     }
 
-    // Lógica para simular el tiempo regresivo de la pista [cite: 39]
+    // Lógica para simular el tiempo regresivo [cite: 39]
     void simularReproduccion(Nodo* cancion, int numeroTema) {
-        cout << "\nReproduciendo lista [" << idLista << "]: " << nombreLista << "\n"; 
+        cout << "\nReproduciendo lista [" << idLista << "]: " << nombreLista << "\n"; [cite: 22]
         cout << "Tema " << numeroTema << ". " << cancion->titulo << ". " << cancion->artista 
-             << ". Tiempo: " << cancion->duracion << " seg.\n"; 
+             << ". Tiempo: " << cancion->duracion << " seg.\n"; [cite: 23]
         
-        // Simulación regresiva: Saltamos de 10 en 10 para que la prueba en consola no sea tan lenta
         for (int t = cancion->duracion; t >= 0; t -= 10) {
             cout << "Tiempo restante: " << (t < 0 ? 0 : t) << " seg...\r";
             cout.flush();
-            this_thread::sleep_for(chrono::milliseconds(300)); // Simula la velocidad de reproducción
+            this_thread::sleep_for(chrono::milliseconds(300)); 
         }
         cout << "Tiempo restante: 0 seg... ¡Completado!       \n";
     }
@@ -70,7 +67,7 @@ public:
         do {
             simularReproduccion(actual, i++);
             actual = actual->siguiente;
-        } while (actual != cabeza); // Condición para evitar bucles infinitos [cite: 40]
+        } while (actual != cabeza); 
     }
 
     // Modo 2: Repetición de lista [cite: 34]
@@ -81,7 +78,6 @@ public:
         int ciclos = 0;
         cout << "\n--- MODO: REPETICIÓN DE LISTA (Simulando 2 vueltas) ---\n";
         
-        // Limitamos los ciclos para evitar que el programa se cuelgue evaluándolo [cite: 40]
         while (ciclos < 2) {
             simularReproduccion(actual, i++);
             actual = actual->siguiente;
@@ -96,7 +92,6 @@ public:
     void repetirCancion() {
          if (!cabeza) return;
          cout << "\n--- MODO: REPETICIÓN DE CANCIÓN (Simulando bucle 3 veces) ---\n";
-         // Elegimos la primera pista para simular el bucle
          for (int i = 0; i < 3; i++) {
              simularReproduccion(cabeza, 1); 
          }
@@ -106,7 +101,6 @@ public:
     void aleatorio() {
         if (!cabeza) return;
 
-        // 1. Contar cuántos nodos hay en la lista circular
         int cantidadNodos = 0;
         Nodo* actual = cabeza;
         do {
@@ -114,33 +108,34 @@ public:
             actual = actual->siguiente;
         } while (actual != cabeza);
 
-        // 2. Crear un arreglo dinámico de punteros (SIN USAR VECTOR)
+        // Arreglo dinámico de punteros
         Nodo** arreglo = new Nodo*[cantidadNodos];
         
-        // 3. Llenar el arreglo con los punteros a los nodos
         actual = cabeza;
         for (int i = 0; i < cantidadNodos; i++) {
             arreglo[i] = actual;
             actual = actual->siguiente;
         }
 
-        // 4. Mezclar el arreglo usando rand() (Algoritmo Fisher-Yates)
-        srand(time(0));
+        // Librería <random> para mezclar
+        random_device rd;  
+        mt19937 generador(rd());         //revisar esta función mejor, siento que es un pococ confusa.
+
         for (int i = cantidadNodos - 1; i > 0; i--) {
-            int j = rand() % (i + 1);
+            uniform_int_distribution<int> distribucion(0, i); 
+            int j = distribucion(generador); 
+
             Nodo* temporal = arreglo[i];
             arreglo[i] = arreglo[j];
             arreglo[j] = temporal;
         }
 
-        // 5. Reproducir las canciones en el nuevo orden aleatorio
         cout << "\n--- MODO: ALEATORIO (SHUFFLE) ---\n";
         for (int i = 0; i < cantidadNodos; i++) {
             simularReproduccion(arreglo[i], i + 1);
         }
 
-        // 6. Liberar la memoria del arreglo de punteros (crucial para no dejar basura)
-        delete[] arreglo; 
+        delete[] arreglo; // <-- Esto es para liberar memoria dinámica
     }
 };
 
@@ -182,13 +177,13 @@ int main() {
 
     while (continuar) {
         cout << "\n========================================\n";
-        cout << "       LISTAS DE REPRODUCCIÓN\n"; 
+        cout << "       LISTAS DE REPRODUCCIÓN\n"; [cite: 14]
         cout << "========================================\n";
-        cout << "Lista [1] Variado\n"; 
-        cout << "Lista [2] Pop\n"; 
-        cout << "Lista [3] OST Modern Warfare\n"; 
+        cout << "Lista [1] Variado\n"; [cite: 15]
+        cout << "Lista [2] Pop\n"; [cite: 16]
+        cout << "Lista [3] OST Modern Warfare\n"; [cite: 17]
         cout << "Lista [4] Salir\n";
-        cout << "Seleccione una lista a reproducir: "; 
+        cout << "Seleccione una lista a reproducir: "; [cite: 18]
         cin >> opcLista;
 
         if (opcLista == 4) break;
@@ -206,10 +201,10 @@ int main() {
         while (enSubMenu) {
             int opcModo = 0;
             cout << "\n--- MODOS DE REPRODUCCIÓN ---\n";
-            cout << "1. Reproducción secuencial\n"; 
+            cout << "1. Reproducción secuencial\n";
             cout << "2. Repetición de lista\n";
-            cout << "3. Repetición de canción\n"; 
-            cout << "4. Aleatorio (shuffle)\n"; 
+            cout << "3. Repetición de canción\n";
+            cout << "4. Aleatorio (shuffle)\n";
             cout << "Seleccione el modo: ";
             cin >> opcModo;
 
@@ -221,13 +216,12 @@ int main() {
                 default: cout << "Modo inválido.\n"; continue;
             }
 
-            // Pregunta final al terminar la reproducción [cite: 26]
             char resp;
-            cout << "\n¿Deseas volver a reproducir esta lista? si es si (s), en que modo, si es no (n), volver al menú inicial: " << endl;
+            cout << "\n¿Deseas volver a reproducir esta lista? si es sí (s), en qué modo, si es no (n), volver al menú inicial: "; [cite: 26]
             cin >> resp;
 
             if (tolower(resp) == 'n') {
-                enSubMenu = false; // Vuelve al menú inicial
+                enSubMenu = false; 
             } 
         }
     }
