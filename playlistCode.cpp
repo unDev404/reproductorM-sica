@@ -138,7 +138,23 @@ void aleatorio(nodo *cabeza) {
         }
         reproducir(actual);
     }
-}
+} 
+
+// Función para liberar la memoria de una lista circular
+void liberarlista(nodo* &cabeza) {
+    if (cabeza == nullptr) return;
+
+    nodo* actual = cabeza->siguiente; 
+    while (actual != cabeza) {
+        nodo* auxiliar = actual;
+        actual = actual->siguiente;
+        delete auxiliar; // Liberamos el nodo actual
+    }
+    
+    //borramos la cabeza de la lista
+    delete cabeza;
+    cabeza = nullptr;
+
 int main() {
     //srand(time(0)); // Inicializa la semilla para números aleatorios
     nodo* lista1 = nullptr;
@@ -248,6 +264,10 @@ do {
 } while (VolverMenuinicial=='s' || VolverMenuinicial=='S');
 
 cout<<"Gracias por usar el reproductor de musica."<<endl;
+liberarlista(lista1);
+liberarlista(lista2);
+liberarlista(lista3);
 return 0;
 
 }
+
